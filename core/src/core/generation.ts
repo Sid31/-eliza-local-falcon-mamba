@@ -130,8 +130,9 @@ export async function generateText({
                 prettyConsole.log("Received response from Grok model.");
                 break;
             }
+            
 
-            case ModelProvider.LLAMALOCAL:
+            case ModelProvider.LLAMALOCAL:{
                 prettyConsole.log(
                     "Using local Llama model for text completion."
                 );
@@ -144,6 +145,21 @@ export async function generateText({
                     max_response_length
                 );
                 prettyConsole.log("Received response from local Llama model.");
+                break;
+            }
+            case ModelProvider.MAMBA:
+                prettyConsole.log(
+                    "Using local Mamba model for text completion."
+                );
+                response = await runtime.mambaService.queueTextCompletion(
+                    context,
+                    temperature,
+                    _stop,
+                    frequency_penalty,
+                    presence_penalty,
+                    max_response_length
+                );
+                prettyConsole.log("Received response from local Mamba model.");
                 break;
 
             default: {

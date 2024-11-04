@@ -104,6 +104,7 @@ export enum ModelProvider {
     GROK = "grok",
     LLAMACLOUD = "llama_cloud",
     LLAMALOCAL = "llama_local",
+    MAMBA = "mamba",
     GOOGLE = "google",
     CLAUDE_VERTEX = "claude_vertex",
 }
@@ -479,6 +480,7 @@ export interface IAgentRuntime {
     transcriptionService: ITranscriptionService;
     videoService: IVideoService;
     llamaService: ILlamaService;
+    mambaService: IMambaService;
     browserService: IBrowserService;
     speechService: ISpeechService;
     pdfService: IPdfService;
@@ -574,4 +576,24 @@ export interface ISpeechService {
 
 export interface IPdfService {
     convertPdfToText(pdfBuffer: Buffer): Promise<string>;
+}
+export interface IMambaService {
+    initializeModel(): Promise<void>;
+    queueMessageCompletion(
+        context: string,
+        temperature: number,
+        stop: string[],
+        frequency_penalty: number,
+        presence_penalty: number,
+        max_tokens: number
+    ): Promise<any>;
+    queueTextCompletion(
+        context: string,
+        temperature: number,
+        stop: string[],
+        frequency_penalty: number,
+        presence_penalty: number,
+        max_tokens: number
+    ): Promise<string>;
+    getEmbeddingResponse(input: string): Promise<number[] | undefined>;
 }

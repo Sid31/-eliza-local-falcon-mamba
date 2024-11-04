@@ -8,6 +8,7 @@ type Models = {
     [ModelProvider.LLAMALOCAL]: Model;
     [ModelProvider.GOOGLE]: Model;
     [ModelProvider.CLAUDE_VERTEX]: Model;
+    [ModelProvider.MAMBA]: Model;
     // TODO: add OpenRouter - feel free to do this :)
 };
 
@@ -113,6 +114,23 @@ const models: Models = {
             // "RichardErkhov/NousResearch_-_Meta-Llama-3.1-70B-gguf", // TODO:
             [ModelClass.EMBEDDING]:
                 "togethercomputer/m2-bert-80M-32k-retrieval",
+        },
+    },
+    [ModelProvider.MAMBA]: {
+        settings: {
+            stop: ["<|im_end|>", "<|eot_id|>", "<|eom_id|>"],
+            maxInputTokens: 32768,  // Mamba can handle longer sequences but let's be conservative
+            maxOutputTokens: 8192,
+            repetition_penalty: 0.0,
+            frequency_penalty: 0.1,
+            presence_penalty: 0.1,
+            temperature: 0.7,
+        },
+        model: {
+            [ModelClass.SMALL]: "tiiuae/falcon-mamba-7b",
+            [ModelClass.MEDIUM]: "tiiuae/falcon-mamba-7b",
+            [ModelClass.LARGE]: "tiiuae/falcon-mamba-7b-instruct",  // Use instruct version for more complex tasks
+            [ModelClass.EMBEDDING]: "tiiuae/falcon-mamba-7b",  // Mamba can generate embeddings too
         },
     },
     [ModelProvider.GOOGLE]: {

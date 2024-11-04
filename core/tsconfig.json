@@ -22,6 +22,10 @@
         "allowArbitraryExtensions": true,
         "typeRoots": ["./node_modules/@types", "./types", "./node_modules/jest/types"]
     },
+    "ts-node": {
+        "esm": true,
+        "experimentalSpecifiers": true
+      },
     "include": ["src/**/*"],
     "exclude": ["node_modules", "dist", "src/**/*.d.ts", "types/**/*.test.ts"]
 }
